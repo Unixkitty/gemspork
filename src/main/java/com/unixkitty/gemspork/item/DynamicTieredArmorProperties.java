@@ -10,8 +10,8 @@ import net.minecraft.util.SoundEvent;
 
 public class DynamicTieredArmorProperties extends DynamicTierProperties implements IArmorMaterial
 {
-    private final ArmorMaterial FLOOR_TIER;
-    private final ArmorMaterial CEILING_TIER;
+    private final IArmorMaterial FLOOR_TIER;
+    private final IArmorMaterial CEILING_TIER;
 
     private final String name;
 
@@ -24,7 +24,7 @@ public class DynamicTieredArmorProperties extends DynamicTierProperties implemen
 
     private final SoundEvent equipSound;
 
-    public DynamicTieredArmorProperties(String name, int tierIndex, int tiersTotal, int enchantability, float floorBump, ArmorMaterial floorTier, ArmorMaterial ceilingTier, SoundEvent equipSound, Tag<Item> repairItem)
+    public DynamicTieredArmorProperties(String name, int tierIndex, int tiersTotal, int enchantability, float floorBump, IArmorMaterial floorTier, IArmorMaterial ceilingTier, SoundEvent equipSound, Tag<Item> repairItem)
     {
         super(repairItem);
 
