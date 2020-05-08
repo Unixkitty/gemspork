@@ -15,11 +15,11 @@ import java.util.function.Consumer;
 public class CraftingTableRecipeProvider extends RecipeProvider
 {
     private final String MODID;
-    
+
     public CraftingTableRecipeProvider(String modId, DataGenerator generatorIn)
     {
         super(generatorIn);
-        
+
         this.MODID = modId;
     }
 

@@ -99,11 +99,11 @@ public final class HelperUtil
         if (!enabled) return;
 
         biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(
-                replaceBlock,
-                ore.getDefaultState(),
-                veinSize
+                        replaceBlock,
+                        ore.getDefaultState(),
+                        veinSize
                 ))
-                .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(timesPerChunk, minHeight, 0, maxHeight)))
+                        .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(timesPerChunk, minHeight, 0, maxHeight)))
         );
     }
 }
