@@ -3,7 +3,7 @@ package com.unixkitty.gemspork.item;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 
 public class DynamicTieredToolProperties extends DynamicTierProperties implements IItemTier
 {
@@ -14,7 +14,7 @@ public class DynamicTieredToolProperties extends DynamicTierProperties implement
     private final float efficiency;
     private final float attackDamage;
 
-    public DynamicTieredToolProperties(int tierIndex, int tiersTotal, int harvestLevel, int enchantability, float floorBump, IItemTier floorTier, IItemTier ceilingTier, Tag<Item> repairItem)
+    public DynamicTieredToolProperties(int tierIndex, int tiersTotal, int harvestLevel, int enchantability, float floorBump, IItemTier floorTier, IItemTier ceilingTier, ITag<Item> repairItem)
     {
         super(repairItem);
 

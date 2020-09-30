@@ -6,7 +6,7 @@ import net.minecraft.data.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
 
@@ -23,7 +23,7 @@ public class CraftingTableRecipeProvider extends RecipeProvider
         this.MODID = modId;
     }
 
-    protected void registerCompression(Consumer<IFinishedRecipe> consumer, Tag<Item> ingredient)
+    protected void registerCompression(Consumer<IFinishedRecipe> consumer, ITag.INamedTag<Item> ingredient)
     {
         IItemProvider output = HelperUtil.itemFromMaterialTag(ingredient, MODID, "block");
 
@@ -43,7 +43,7 @@ public class CraftingTableRecipeProvider extends RecipeProvider
                 .build(consumer);
     }
 
-    protected void registerToolSetRecipes(Consumer<IFinishedRecipe> consumer, Tag<Item> ingredient)
+    protected void registerToolSetRecipes(Consumer<IFinishedRecipe> consumer, ITag.INamedTag<Item> ingredient)
     {
         ICriterionInstance criterion = hasItem(ingredient);
 
@@ -95,7 +95,7 @@ public class CraftingTableRecipeProvider extends RecipeProvider
                 .build(consumer);
     }
 
-    protected void registerSimpleArmorSet(Consumer<IFinishedRecipe> consumer, Tag<Item> ingredient)
+    protected void registerSimpleArmorSet(Consumer<IFinishedRecipe> consumer, ITag.INamedTag<Item> ingredient)
     {
         ICriterionInstance criterion = hasItem(ingredient);
 

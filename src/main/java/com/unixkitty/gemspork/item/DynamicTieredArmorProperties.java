@@ -4,7 +4,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.SoundEvent;
 
 public class DynamicTieredArmorProperties extends DynamicTierProperties implements IArmorMaterial
@@ -23,7 +23,7 @@ public class DynamicTieredArmorProperties extends DynamicTierProperties implemen
 
     private final SoundEvent equipSound;
 
-    public DynamicTieredArmorProperties(String name, int tierIndex, int tiersTotal, int enchantability, float floorBump, IArmorMaterial floorTier, IArmorMaterial ceilingTier, SoundEvent equipSound, Tag<Item> repairItem)
+    public DynamicTieredArmorProperties(String name, int tierIndex, int tiersTotal, int enchantability, float floorBump, IArmorMaterial floorTier, IArmorMaterial ceilingTier, SoundEvent equipSound, ITag<Item> repairItem)
     {
         super(repairItem);
 
@@ -84,5 +84,12 @@ public class DynamicTieredArmorProperties extends DynamicTierProperties implemen
     public float getToughness()
     {
         return this.toughness;
+    }
+
+    //New "Armor knockback resistance", hardcoding for now since all vanilla tiers have it at 0 anyway
+    @Override
+    public float getKnockbackResistance()
+    {
+        return 0.0f;
     }
 }

@@ -2,16 +2,16 @@ package com.unixkitty.gemspork.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.LazyValue;
 
 public abstract class DynamicTierProperties
 {
     protected final LazyValue<Ingredient> repairItem;
 
-    public DynamicTierProperties(Tag<Item> repaitItem)
+    public DynamicTierProperties(ITag<Item> repairItem)
     {
-        this.repairItem = new LazyValue<>(() -> Ingredient.fromTag(repaitItem));
+        this.repairItem = new LazyValue<>(() -> Ingredient.fromTag(repairItem));
     }
 
     protected static int calcEnchantability(int tierIndex, int tiersTotal, int floor, int ceiling, float floorBump, int enchantability)

@@ -1,5 +1,6 @@
 package com.unixkitty.gemspork.lib.tileentity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -20,9 +21,9 @@ public abstract class TileEntityMod extends TileEntity
      * Read saved data from disk into the tile.
      */
     @Override
-    public void read(final CompoundNBT compound)
+    public void read(BlockState state, CompoundNBT compound)
     {
-        super.read(compound);
+        super.read(state, compound);
         readPacketNBT(compound);
     }
 
