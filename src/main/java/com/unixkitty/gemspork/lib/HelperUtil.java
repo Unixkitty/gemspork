@@ -6,12 +6,12 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.CountRangeConfig;
+import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 
@@ -94,7 +94,23 @@ public final class HelperUtil
         }
     }
 
-    public static void addOreToBiome(Biome biome, OreFeatureConfig.FillerBlockType replaceBlock, Block ore, boolean enabled, int veinSize, int timesPerChunk, int minHeight, int maxHeight)
+    public static ConfiguredFeature<?, ?> registerOreFeature(RuleTest replaceBlock, Block ore, int veinSize, int timesPerChunk, int minHeight, int maxHeight)
+    {
+        return Feature.ORE.withConfiguration(
+                new OreFeatureConfig(
+                        replaceBlock,
+                        ore.getDefaultState(),
+                        veinSize
+                )
+        ).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(
+                        minHeight,
+                        0,
+                        maxHeight
+                )).square().func_242731_b(timesPerChunk)
+        );
+    }
+
+    /*public static void addOreToBiome(Biome biome, OreFeatureConfig.FillerBlockType replaceBlock, Block ore, boolean enabled, int veinSize, int timesPerChunk, int minHeight, int maxHeight)
     {
         if (!enabled) return;
 
@@ -105,5 +121,6 @@ public final class HelperUtil
                 ))
                         .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(timesPerChunk, minHeight, 0, maxHeight)))
         );
-    }
+
+    }*/
 }
