@@ -18,47 +18,47 @@ public class DynamicTieredToolProperties extends DynamicTierProperties implement
     {
         super(repairItem);
 
-        this.harvestLevel = harvestLevel == -1 ? (tiersTotal == (tierIndex + 1) ? ceilingTier.getHarvestLevel() : floorTier.getHarvestLevel()) : harvestLevel;
-        this.enchantability = calcEnchantability(tierIndex, tiersTotal, floorTier.getEnchantability(), ceilingTier.getEnchantability(), floorBump, enchantability);
+        this.harvestLevel = harvestLevel == -1 ? (tiersTotal == (tierIndex + 1) ? ceilingTier.getLevel() : floorTier.getLevel()) : harvestLevel;
+        this.enchantability = calcEnchantability(tierIndex, tiersTotal, floorTier.getEnchantmentValue(), ceilingTier.getEnchantmentValue(), floorBump, enchantability);
 
-        this.durability = getTierStrengthAsInt(tierIndex, tiersTotal, floorTier.getMaxUses(), ceilingTier.getMaxUses(), floorBump);
-        this.efficiency = getTierStrength(tierIndex, tiersTotal, floorTier.getEfficiency(), ceilingTier.getEfficiency(), floorBump);
-        this.attackDamage = getTierStrength(tierIndex, tiersTotal, floorTier.getAttackDamage(), ceilingTier.getAttackDamage(), floorBump);
+        this.durability = getTierStrengthAsInt(tierIndex, tiersTotal, floorTier.getUses(), ceilingTier.getUses(), floorBump);
+        this.efficiency = getTierStrength(tierIndex, tiersTotal, floorTier.getSpeed(), ceilingTier.getSpeed(), floorBump);
+        this.attackDamage = getTierStrength(tierIndex, tiersTotal, floorTier.getAttackDamageBonus(), ceilingTier.getAttackDamageBonus(), floorBump);
     }
 
     @Override
-    public int getMaxUses()
+    public int getUses()
     {
         return this.durability;
     }
 
     @Override
-    public float getEfficiency()
+    public float getSpeed()
     {
         return this.efficiency;
     }
 
     @Override
-    public float getAttackDamage()
+    public float getAttackDamageBonus()
     {
         return this.attackDamage;
     }
 
     @Override
-    public int getHarvestLevel()
+    public int getLevel()
     {
         return this.harvestLevel;
     }
 
     @Override
-    public int getEnchantability()
+    public int getEnchantmentValue()
     {
         return this.enchantability;
     }
 
     @Override
-    public Ingredient getRepairMaterial()
+    public Ingredient getRepairIngredient()
     {
-        return this.repairItem.getValue();
+        return this.repairItem.get();
     }
 }

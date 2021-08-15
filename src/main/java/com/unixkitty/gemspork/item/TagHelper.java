@@ -17,21 +17,21 @@ public final class TagHelper
 
     public static ITag.INamedTag<Item> itemTag(String modId, String name)
     {
-        return ItemTags.makeWrapperTag(HelperUtil.prefixResource(modId, name).toString());
+        return ItemTags.bind(HelperUtil.prefixResource(modId, name).toString());
     }
 
     public static ITag.INamedTag<Block> blockTag(String modId, String name)
     {
-        return BlockTags.makeWrapperTag(HelperUtil.prefixResource(modId, name).toString());
+        return BlockTags.bind(HelperUtil.prefixResource(modId, name).toString());
     }
 
     public static ITag.INamedTag<Block> forgeBlockTag(String type, String name)
     {
-        return BlockTags.makeWrapperTag(modResource("forge", type, name).toString());
+        return BlockTags.bind(modResource("forge", type, name).toString());
     }
 
     public static ITag.INamedTag<Item> forgeItemTag(String type, String name)
     {
-        return ItemTags.makeWrapperTag(modResource("forge", type, name).toString());
+        return ItemTags.bind(modResource("forge", type, name).toString());
     }
 }

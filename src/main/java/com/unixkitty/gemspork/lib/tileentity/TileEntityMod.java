@@ -21,9 +21,9 @@ public abstract class TileEntityMod extends TileEntity
      * Read saved data from disk into the tile.
      */
     @Override
-    public void read(BlockState state, CompoundNBT compound)
+    public void load(BlockState state, CompoundNBT compound)
     {
-        super.read(state, compound);
+        super.load(state, compound);
         readPacketNBT(compound);
     }
 
@@ -32,9 +32,9 @@ public abstract class TileEntityMod extends TileEntity
      */
     @Nonnull
     @Override
-    public CompoundNBT write(final CompoundNBT compound)
+    public CompoundNBT save(final CompoundNBT compound)
     {
-        CompoundNBT result = super.write(compound);
+        CompoundNBT result = super.save(compound);
         writePacketNBT(result);
         return result;
     }
@@ -49,7 +49,7 @@ public abstract class TileEntityMod extends TileEntity
     @Nonnull
     public CompoundNBT getUpdateTag()
     {
-        return this.write(new CompoundNBT());
+        return this.save(new CompoundNBT());
     }
 
     public abstract void readPacketNBT(CompoundNBT compound);
@@ -62,13 +62,13 @@ public abstract class TileEntityMod extends TileEntity
     {
         CompoundNBT compound = new CompoundNBT();
         writePacketNBT(compound);
-        return new SUpdateTileEntityPacket(pos, -999, compound);
+        return new SUpdateTileEntityPacket(worldPosition, -999, compound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet)
     {
         super.onDataPacket(net, packet);
-        readPacketNBT(packet.getNbtCompound());
+        readPacketNBT(packet.getTag());
     }
 }

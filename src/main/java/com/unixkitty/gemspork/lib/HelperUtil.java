@@ -96,17 +96,17 @@ public final class HelperUtil
 
     public static ConfiguredFeature<?, ?> registerOreFeature(RuleTest replaceBlock, Block ore, int veinSize, int timesPerChunk, int minHeight, int maxHeight)
     {
-        return Feature.ORE.withConfiguration(
+        return Feature.ORE.configured(
                 new OreFeatureConfig(
                         replaceBlock,
-                        ore.getDefaultState(),
+                        ore.defaultBlockState(),
                         veinSize
                 )
-        ).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(
+        ).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(
                         minHeight,
                         0,
                         maxHeight
-                )).square().func_242731_b(timesPerChunk)
+                )).squared().count(timesPerChunk)
         );
     }
 

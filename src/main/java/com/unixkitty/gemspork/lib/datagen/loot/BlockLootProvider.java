@@ -51,7 +51,7 @@ public class BlockLootProvider implements IDataProvider
     }
 
     @Override
-    public final void act(DirectoryCache cache) throws IOException
+    public final void run(DirectoryCache cache) throws IOException
     {
         Map<ResourceLocation, LootTable.Builder> tables = new HashMap<>();
 
@@ -68,7 +68,7 @@ public class BlockLootProvider implements IDataProvider
         for (Map.Entry<ResourceLocation, LootTable.Builder> e : tables.entrySet())
         {
             Path path = getPath(generator.getOutputFolder(), e.getKey());
-            IDataProvider.save(GSON, cache, LootTableManager.toJson(e.getValue().setParameterSet(LootParameterSets.BLOCK).build()), path);
+            IDataProvider.save(GSON, cache, LootTableManager.serialize(e.getValue().setParamSet(LootParameterSets.BLOCK).build()), path);
         }
     }
 
@@ -79,54 +79,54 @@ public class BlockLootProvider implements IDataProvider
 
     protected static LootTable.Builder genEmpty(Block block)
     {
-        return LootTable.builder();
+        return LootTable.lootTable();
     }
 
     protected static LootTable.Builder genCopyNbt(Block block, String... tags)
     {
-        LootEntry.Builder<?> entry = ItemLootEntry.builder(block);
-        CopyNbt.Builder func = CopyNbt.builder(CopyNbt.Source.BLOCK_ENTITY);
+        LootEntry.Builder<?> entry = ItemLootEntry.lootTableItem(block);
+        CopyNbt.Builder func = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY);
 
         for (String tag : tags)
         {
-            func = func.replaceOperation(tag, "BlockEntityTag." + tag);
+            func = func.copy(tag, "BlockEntityTag." + tag);
         }
 
-        LootPool.Builder pool = LootPool.builder().name("main").rolls(ConstantRange.of(1)).addEntry(entry).acceptCondition(SurvivesExplosion.builder()).acceptFunction(func);
+        LootPool.Builder pool = LootPool.lootPool().name("main").setRolls(ConstantRange.exactly(1)).add(entry).when(SurvivesExplosion.survivesExplosion()).apply(func);
 
-        return LootTable.builder().addLootPool(pool);
+        return LootTable.lootTable().withPool(pool);
     }
 
     protected static LootTable.Builder genSilkTouchableWithFortune(Block block, IItemProvider item, boolean applyFortune, int baseCount)
     {
-        ItemPredicate.Builder silkPred = ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)));
-        LootEntry.Builder<?> silk = ItemLootEntry.builder(block).acceptCondition(MatchTool.builder(silkPred));
-        StandaloneLootEntry.Builder<?> nonSilk = ItemLootEntry.builder(item != null ? item : block);
+        ItemPredicate.Builder silkPred = ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)));
+        LootEntry.Builder<?> silk = ItemLootEntry.lootTableItem(block).when(MatchTool.toolMatches(silkPred));
+        StandaloneLootEntry.Builder<?> nonSilk = ItemLootEntry.lootTableItem(item != null ? item : block);
 
         if (baseCount != 1)
         {
-            nonSilk.acceptFunction(SetCount.builder(ConstantRange.of(baseCount)));
+            nonSilk.apply(SetCount.setCount(ConstantRange.exactly(baseCount)));
         }
 
         if (applyFortune)
         {
-            nonSilk.acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE));
+            nonSilk.apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
         }
 
-        nonSilk.acceptFunction(ExplosionDecay.builder());
+        nonSilk.apply(ExplosionDecay.explosionDecay());
 
-        LootEntry.Builder<?> entry = AlternativesLootEntry.builder(silk, nonSilk);
-        LootPool.Builder pool = LootPool.builder().name("main").rolls(ConstantRange.of(1)).addEntry(entry);
+        LootEntry.Builder<?> entry = AlternativesLootEntry.alternatives(silk, nonSilk);
+        LootPool.Builder pool = LootPool.lootPool().name("main").setRolls(ConstantRange.exactly(1)).add(entry);
 
-        return LootTable.builder().addLootPool(pool);
+        return LootTable.lootTable().withPool(pool);
     }
 
     protected static LootTable.Builder genRegular(Block block)
     {
-        LootEntry.Builder<?> entry = ItemLootEntry.builder(block);
-        LootPool.Builder pool = LootPool.builder().name("main").rolls(ConstantRange.of(1)).addEntry(entry).acceptCondition(SurvivesExplosion.builder());
+        LootEntry.Builder<?> entry = ItemLootEntry.lootTableItem(block);
+        LootPool.Builder pool = LootPool.lootPool().name("main").setRolls(ConstantRange.exactly(1)).add(entry).when(SurvivesExplosion.survivesExplosion());
 
-        return LootTable.builder().addLootPool(pool);
+        return LootTable.lootTable().withPool(pool);
     }
 
     @Override

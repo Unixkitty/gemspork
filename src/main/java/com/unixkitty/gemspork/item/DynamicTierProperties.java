@@ -11,7 +11,7 @@ public abstract class DynamicTierProperties
 
     public DynamicTierProperties(ITag<Item> repairItem)
     {
-        this.repairItem = new LazyValue<>(() -> Ingredient.fromTag(repairItem));
+        this.repairItem = new LazyValue<>(() -> Ingredient.of(repairItem));
     }
 
     protected static int calcEnchantability(int tierIndex, int tiersTotal, int floor, int ceiling, float floorBump, int enchantability)

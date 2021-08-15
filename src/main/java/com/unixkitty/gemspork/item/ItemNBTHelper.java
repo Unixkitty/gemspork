@@ -16,7 +16,7 @@ public class ItemNBTHelper
      */
     public static JsonObject serializeStack(ItemStack stack)
     {
-        CompoundNBT nbt = stack.write(new CompoundNBT());
+        CompoundNBT nbt = stack.save(new CompoundNBT());
         byte c = nbt.getByte("Count");
         if (c != 1)
         {

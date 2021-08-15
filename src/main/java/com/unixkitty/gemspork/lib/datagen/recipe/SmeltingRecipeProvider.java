@@ -23,13 +23,13 @@ public abstract class SmeltingRecipeProvider extends RecipeProvider
 
     protected void addBasicOreCooking(Consumer<IFinishedRecipe> consumer, IItemProvider input, IItemProvider result, String name)
     {
-        CookingRecipeBuilder.smeltingRecipe(
-                Ingredient.fromItems(input),
-                result,
-                1.0F,
-                200)
-                .addCriterion("has_" + name + "_ore", hasItem(input))
-                .build(consumer, HelperUtil.prefixResource(MODID, "smelting/" + name + "_from_smelting"));
+        CookingRecipeBuilder.smelting(
+                        Ingredient.of(input),
+                        result,
+                        1.0F,
+                        200)
+                .unlockedBy("has_" + name + "_ore", has(input))
+                .save(consumer, HelperUtil.prefixResource(MODID, "smelting/" + name + "_from_smelting"));
     }
 
     @Override

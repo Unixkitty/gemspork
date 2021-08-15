@@ -27,25 +27,25 @@ public class CraftingTableRecipeProvider extends RecipeProvider
     {
         IItemProvider output = HelperUtil.itemFromMaterialTag(ingredient, MODID, "block");
 
-        ShapedRecipeBuilder.shapedRecipe(output)
-                .key('I', Ingredient.fromTag(ingredient))
-                .patternLine("III")
-                .patternLine("III")
-                .patternLine("III")
-                .addCriterion("has_item", hasItem(ingredient))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(output)
+                .define('I', Ingredient.of(ingredient))
+                .pattern("III")
+                .pattern("III")
+                .pattern("III")
+                .unlockedBy("has_item", has(ingredient))
+                .save(consumer);
 
         //Decompression
         IItemProvider output2 = HelperUtil.itemFromTag(MODID, ingredient);
-        ShapelessRecipeBuilder.shapelessRecipe(output2, 9)
-                .addCriterion("has_item", hasItem(output2))
-                .addIngredient(output)
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(output2, 9)
+                .unlockedBy("has_item", has(output2))
+                .requires(output)
+                .save(consumer);
     }
 
     protected void registerToolSetRecipes(Consumer<IFinishedRecipe> consumer, ITag.INamedTag<Item> ingredient)
     {
-        ICriterionInstance criterion = hasItem(ingredient);
+        ICriterionInstance criterion = has(ingredient);
 
         Item axe = HelperUtil.itemFromMaterialTag(ingredient, MODID, "axe");
         Item sword = HelperUtil.itemFromMaterialTag(ingredient, MODID, "sword");
@@ -53,83 +53,83 @@ public class CraftingTableRecipeProvider extends RecipeProvider
         Item pickaxe = HelperUtil.itemFromMaterialTag(ingredient, MODID, "pickaxe");
         Item hoe = HelperUtil.itemFromMaterialTag(ingredient, MODID, "hoe");
 
-        ShapedRecipeBuilder.shapedRecipe(pickaxe)
-                .key('S', ingredient)
-                .key('T', Tags.Items.RODS_WOODEN)
-                .patternLine("SSS")
-                .patternLine(" T ")
-                .patternLine(" T ")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(shovel)
-                .key('S', ingredient)
-                .key('T', Tags.Items.RODS_WOODEN)
-                .patternLine("S")
-                .patternLine("T")
-                .patternLine("T")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(axe)
-                .key('S', ingredient)
-                .key('T', Tags.Items.RODS_WOODEN)
-                .patternLine("SS")
-                .patternLine("TS")
-                .patternLine("T ")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(sword)
-                .key('S', ingredient)
-                .key('T', Tags.Items.RODS_WOODEN)
-                .patternLine("S")
-                .patternLine("S")
-                .patternLine("T")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(hoe)
-                .key('S', ingredient)
-                .key('T', Tags.Items.RODS_WOODEN)
-                .patternLine("SS")
-                .patternLine(" T")
-                .patternLine(" T")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(pickaxe)
+                .define('S', ingredient)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .pattern("SSS")
+                .pattern(" T ")
+                .pattern(" T ")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(shovel)
+                .define('S', ingredient)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .pattern("S")
+                .pattern("T")
+                .pattern("T")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(axe)
+                .define('S', ingredient)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .pattern("SS")
+                .pattern("TS")
+                .pattern("T ")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(sword)
+                .define('S', ingredient)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .pattern("S")
+                .pattern("S")
+                .pattern("T")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(hoe)
+                .define('S', ingredient)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .pattern("SS")
+                .pattern(" T")
+                .pattern(" T")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
     }
 
     protected void registerSimpleArmorSet(Consumer<IFinishedRecipe> consumer, ITag.INamedTag<Item> ingredient)
     {
-        ICriterionInstance criterion = hasItem(ingredient);
+        ICriterionInstance criterion = has(ingredient);
 
         Item helmet = HelperUtil.armorItemFromMaterialResource(ingredient, EquipmentSlotType.HEAD, MODID);
         Item chestplate = HelperUtil.armorItemFromMaterialResource(ingredient, EquipmentSlotType.CHEST, MODID);
         Item leggings = HelperUtil.armorItemFromMaterialResource(ingredient, EquipmentSlotType.LEGS, MODID);
         Item boots = HelperUtil.armorItemFromMaterialResource(ingredient, EquipmentSlotType.FEET, MODID);
 
-        ShapedRecipeBuilder.shapedRecipe(helmet)
-                .key('S', ingredient)
-                .patternLine("SSS")
-                .patternLine("S S")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(chestplate)
-                .key('S', ingredient)
-                .patternLine("S S")
-                .patternLine("SSS")
-                .patternLine("SSS")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(leggings)
-                .key('S', ingredient)
-                .patternLine("SSS")
-                .patternLine("S S")
-                .patternLine("S S")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(boots)
-                .key('S', ingredient)
-                .patternLine("S S")
-                .patternLine("S S")
-                .addCriterion("has_item", criterion)
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(helmet)
+                .define('S', ingredient)
+                .pattern("SSS")
+                .pattern("S S")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(chestplate)
+                .define('S', ingredient)
+                .pattern("S S")
+                .pattern("SSS")
+                .pattern("SSS")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(leggings)
+                .define('S', ingredient)
+                .pattern("SSS")
+                .pattern("S S")
+                .pattern("S S")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(boots)
+                .define('S', ingredient)
+                .pattern("S S")
+                .pattern("S S")
+                .unlockedBy("has_item", criterion)
+                .save(consumer);
     }
 
     @Override
